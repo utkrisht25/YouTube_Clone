@@ -14,9 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card } from "@/components/ui/card";
 import { RouteSignIn } from "@/helpers/RouteName";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
+import { getEvn } from "@/helpers/getEnv";
+import { showToast } from "@/helpers/showToast";
+
 
 const SignUp = () => {
+    const navigate = useNavigate();
   const formSchema = z.object({
     username: z.string().min(3, {
       message: "Username must be at least 3 characters.",
@@ -40,10 +44,23 @@ const SignUp = () => {
       confirmPassword: "",
     },
   });
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values) {
     console.log(values);
+    try {
+      const response = await fetch(`${getEvn('VITE_API_BASE_URL')}/auth/register` , {
+        method: 'post',
+        headers: { 'Content-type' : 'application/json' },
+        body: JSON.stringify(values)
+      })
+      const data = await response.json();
+      if(!response.ok){
+        return showToast('error', data.message)
+      }
+      navigate(RouteSignIn)
+      showToast('success', data.message)
+    } catch (error) {
+      showToast('error', error.message)
+    }
   }
   return (
     <div className="flex justify-center items-center h-screen w-screen">
