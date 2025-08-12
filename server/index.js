@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import AuthRoute from './routes/Auth.route.js';
 
 
 dotenv.config();
@@ -17,11 +18,25 @@ app.use(cors({
 
 const PORT = process.env.PORT;
 
+
+//route setup will take place here
+app.use('/api/auth', AuthRoute)
+
+
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})
 .then(() => console.log('connected to databse'))
 .catch(err => console.log('databse connection failed', err))
 
 app.listen(PORT, () =>{
     console.log(`server is running on port ${PORT}`);
-    
 })
+
+app.use((err,req,res,next) =>{
+    const statusCode = err.statusCode || 500;
+    const  message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message
+    })
+});
