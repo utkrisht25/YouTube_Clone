@@ -62,3 +62,46 @@ export const Login = async(req,res,next) =>{
         next(handleError(500 , error.message))
     }
 }
+
+export const GoogleLogin = async (req, res, next) =>{
+    try {
+        const {username , email , avatar} = req.body;
+        let user
+        user = await User.findOne({email})
+        if(!user){
+            // now we get the user from the google login way
+            const password = crypto.randomBytes(16).toString('hex');
+            // this crytpo in built in lib of node that we can use for create ramdom secured password
+            const hashedPassword = bcryptjs.hashSync(password);
+            const newUser = new User({
+                username,
+                email,
+                password: hashedPassword,
+                avatar
+            })
+            user = await newUser.save()
+        }
+        const token = jwt.sign({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            avatar: user.avatar
+        }, process.env.JWT_SECRET)
+
+        res.cookie('access_token', token , {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            path: '/'
+        })
+        const newUser = user.toObject({getters: true})
+        delete newUser.password
+        res.status(200).json({
+            success: true,
+            user: newUser,
+            message: 'Login Successfull.'
+        })
+    } catch (error) {
+        next(handleError(500 , error.message))
+    }
+}
