@@ -6,6 +6,7 @@ import { CgMenu } from "react-icons/cg"; // Hamburger menu icon
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiVideoAddLine } from "react-icons/ri"; // Icon for 'Create'
 import { IoMdNotificationsOutline } from "react-icons/io"; // Icon for 'Notifications'
+import { RouteSignIn } from "@/helpers/RouteName";
 
 
 const TopBar = ({ onToggleSidebar }) => {
@@ -50,7 +51,7 @@ const TopBar = ({ onToggleSidebar }) => {
 
         {/* --- 3. SIGN IN / PROFILE BUTTON --- */}
         <Button asChild className='bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-100 flex items-center gap-x-2 px-3 py-2'>
-            <Link to="/signin" >
+            <Link to={RouteSignIn} >
                 <FaRegUserCircle size={20} />
                 <span className="hidden sm:block">Sign In</span>
             </Link>
