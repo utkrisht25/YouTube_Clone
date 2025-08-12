@@ -12,16 +12,23 @@ const Layout = () => {
     };
 
   return (
-    //navbar
     <SidebarProvider>
-      <TopBar onToggleSidebar={toggleSidebar} />
-      <AppSidebar isOpen={isSidebarOpen} />
-      <main className="w-full">
-        <div className="w-full min-h-[calc(100vh-64px)]">
-          <Outlet />
+      <div className="h-screen flex flex-col">
+        <TopBar onToggleSidebar={toggleSidebar} />
+        <div className="flex flex-1 pt-16"> {/* pt-16 to account for fixed Topbar height */}
+          <AppSidebar isOpen={isSidebarOpen} />
+          <main 
+            className={`flex-1 transition-all duration-300 ${
+              isSidebarOpen ? 'ml-60' : 'ml-20'
+            }`}
+          >
+            <div className="min-h-[calc(100vh-64px)] px-4 py-6">
+              <Outlet />
+            </div>
+            <Footer />
+          </main>
         </div>
-        <Footer />
-      </main>
+      </div>
     </SidebarProvider>
   );
 };

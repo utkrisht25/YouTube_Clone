@@ -4,7 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import AuthRoute from './routes/Auth.route.js';
-
+import VideoRoute from './routes/video.route.js';
 
 dotenv.config();
 const app = express();
@@ -22,7 +22,8 @@ const PORT = process.env.PORT;
 
 
 //route setup will take place here
-app.use('/api/auth', AuthRoute)
+app.use('/api/auth', AuthRoute);
+app.use('/api/videos', VideoRoute);
 
 
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})
