@@ -9,9 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-  SidebarGroupLabel
+  SidebarGroupLabel,
 } from "../components/ui/sidebar.jsx";
-import logo from "@/assets/images/logo-dark.png"
+import logo from "@/assets/images/logo-dark.png";
 import { FaHome } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
@@ -33,169 +33,179 @@ import { FaRegFlag } from "react-icons/fa6";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiFeedbackLine } from "react-icons/ri";
 import { Button } from "./ui/button.jsx";
+import { cn } from "@/lib/utils.js";
 
-export function AppSidebar() {
+// Helper component to keep the main code clean
+const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
+  const Icon = icon;
   return (
-    <Sidebar>
-      <SidebarHeader className='bg-white'>
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild className={cn(
+        // Base styles for the button
+        "flex items-center w-full rounded-lg text-gray-700 hover:bg-gray-100",
+        // Conditional styles based on 'isOpen'
+        isOpen 
+          ? "gap-x-3 p-2" // When OPEN: horizontal layout with padding
+          : "h-18 flex-col justify-center gap-y-1 p-1" // When COLLAPSED: vertical layout
+      )}>
+        <Link to={to}>
+          <Icon size={22} className="flex-shrink-0" />
+          <span className={cn(
+            // Conditional styles for the text
+            isOpen ? "text-sm font-medium" : "text-[9px]"
+          )}>
+            {children}
+          </span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+};
+
+export function AppSidebar({ isOpen }) {
+  return (
+    <Sidebar
+      className={cn(
+        "transition-all duration-300 ease-in-out",
+        isOpen ? "w-60" : "w-[72px]"
+      )}
+    >
+      <SidebarHeader className="bg-white">
         <img src={logo} alt="logo image" width={120} />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FaHome />
-                        <Link to="/">Home</Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <SiYoutubeshorts />
-                        <Link to="/">Shorts</Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <MdOutlineSubscriptions />
-                        <Link to="/">Subscriptions</Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
+       <SidebarGroup>
+          <SidebarMenu>
+            {/* Using the new, cleaner component */}
+            <SidebarNavItem isOpen={isOpen} icon={FaHome} to="/">Home</SidebarNavItem>
+            <SidebarNavItem isOpen={isOpen} icon={SiYoutubeshorts} to="/shorts">Shorts</SidebarNavItem>
+            <SidebarNavItem isOpen={isOpen} icon={MdOutlineSubscriptions} to="/subscriptions">Subscriptions</SidebarNavItem>
+            
+            <SidebarSeparator className={cn(!isOpen && "my-1")} />
+            
+            <SidebarNavItem isOpen={isOpen} icon={FaUserCircle} to="/you">You</SidebarNavItem>
+            <SidebarNavItem isOpen={isOpen} icon={FaHistory} to="/history">History</SidebarNavItem>
+          </SidebarMenu>
         </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-            <SidebarMenu>
+        {isOpen && (
+          <>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-sm m-4">
+                Sign in to like videos, comments and subscribe.
+              </SidebarGroupLabel>
+              <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FaUserCircle />
-                        <Link to="/">You</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton className="bg-transparent ">
+                    <Button className="cursor-pointer bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-200">
+                      <FaRegUserCircle />
+                      sign in
+                    </Button>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FaHistory />
-                        <Link to="/">History</Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-            <SidebarGroupLabel className='text-sm m-4'>
-               Sign in to like videos, comments and subscribe.
-            </SidebarGroupLabel>
-            <SidebarMenu>
-             <SidebarMenuItem>
-                    <SidebarMenuButton className='bg-transparent '>
-                       
-                        <Button className='cursor-pointer bg-transparent text-blue-600 rounded-full border hover:bg-blue-200' >
-                             <FaRegUserCircle />
-                            sign in
-                        </Button>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-            <SidebarGroupLabel className='text-black text-lg'>
+              </SidebarMenu>
+            </SidebarGroup>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-black text-lg">
                 Explore
-            </SidebarGroupLabel>
-            <SidebarMenu>
+              </SidebarGroupLabel>
+              <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FiShoppingBag />
-                        <Link to="/">Shopping</Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <IoMdMusicalNotes />
-                        <Link to="/">Music</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <FiShoppingBag />
+                    <Link to="/">Shopping</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <PiFilmSlateDuotone />
-                        <Link to="/">Films</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <IoMdMusicalNotes />
+                    <Link to="/">Music</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <MdLiveTv />
-                        <Link to="/">Live</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <PiFilmSlateDuotone />
+                    <Link to="/">Films</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <IoGameControllerOutline />
-                        <Link to="/">Gaming</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <MdLiveTv />
+                    <Link to="/">Live</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <MdOutlineNewspaper />
-                        <Link to="/">News</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <IoGameControllerOutline />
+                    <Link to="/">Gaming</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <GoTrophy />
-                        <Link to="/">Sport</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <MdOutlineNewspaper />
+                    <Link to="/">News</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FaGraduationCap />
-                        <Link to="/">Courses</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <GoTrophy />
+                    <Link to="/">Sport</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <GiHanger />
-                        <Link to="/">Fashion & Beauty</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <FaGraduationCap />
+                    <Link to="/">Courses</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <MdOutlinePodcasts />
-                        <Link to="/">Podcast</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <GiHanger />
+                    <Link to="/">Fashion & Beauty</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-            </SidebarMenu>
-        </SidebarGroup>
-         <SidebarSeparator />
-         <SidebarGroup>
-            <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <IoSettingsSharp />
-                        <Link to="/">Settings</Link>
-                    </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <MdOutlinePodcasts />
+                    <Link to="/">Podcast</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <FaRegFlag />
-                        <Link to="/">Report History</Link>
-                    </SidebarMenuButton>
+              </SidebarMenu>
+            </SidebarGroup>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <IoSettingsSharp />
+                    <Link to="/">Settings</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <IoMdHelpCircleOutline />
-                        <Link to="/">Help</Link>
-                    </SidebarMenuButton>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaRegFlag />
+                    <Link to="/">Report History</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-                 <SidebarMenuItem>
-                    <SidebarMenuButton>
-                        <RiFeedbackLine />
-                        <Link to="/">Send feedback</Link>
-                    </SidebarMenuButton>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <IoMdHelpCircleOutline />
+                    <Link to="/">Help</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
-            </SidebarMenu>
-         </SidebarGroup>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <RiFeedbackLine />
+                    <Link to="/">Send feedback</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroup>{" "}
+          </>
+        )}
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
-  )
+  );
 }
