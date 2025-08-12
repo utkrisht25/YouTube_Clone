@@ -1,6 +1,9 @@
-import React from 'react'
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
+import { SidebarProvider } from "@/components/ui/sidebar.jsx";
+import TopBar from "@/components/Topbar.jsx";
+import { AppSidebar } from "@/components/AppSidebar.jsx";
 
 const Layout = () => {
   return (
@@ -8,8 +11,10 @@ const Layout = () => {
     <SidebarProvider>
       <TopBar />
       <AppSidebar />
-      <main>
-        <Outlet />
+      <main className="w-full">
+        <div className="w-full min-h-[calc(100vh-64px)]">
+          <Outlet />
+        </div>
         <Footer />
       </main>
     </SidebarProvider>

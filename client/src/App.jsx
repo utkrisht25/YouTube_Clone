@@ -1,12 +1,19 @@
-import React from 'react'
-import { Button } from './components/ui/button'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Layout from "./Layout/Layout.jsx"
+import { RouteIndex } from "./helpers/RouteName"
+import Index from "./pages/Index"
 
 const App = () => {
   return (
-    <div>
-      <h1 className='bg-green-500'>this is app</h1>
-      <Button> Click me!! </Button>
-    </div>
+    <BrowserRouter >
+           <Routes>
+             <Route path = {RouteIndex} element={<Layout />} > 
+                {/* we'll add our nested routes here */}
+                <Route index element={<Index />} />
+             </Route >
+
+           </Routes>
+     </BrowserRouter>
   )
 }
 
