@@ -105,7 +105,7 @@ export const GoogleLogin = async (req, res, next) =>{
         next(handleError(500 , error.message))
     }
 }
-export const Logout = async (req,res,next) =>{
+export const Logout =  (req,res,next) =>{
     try {
         res.clearCookie('access_token' , {
             httpOnly: true,
@@ -119,6 +119,5 @@ export const Logout = async (req,res,next) =>{
         })
     } catch (error) {
         next(handleError(500 , error.message))
-    }
-    
+    }   
 }

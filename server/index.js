@@ -10,7 +10,9 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+// express.json() helps us to get all the data in json format that we'll get from the frontend
 app.use(cookieParser());
+// cookie parseer will parse the data from the cookie that it will get from the frontend 
 app.use(cors({
     origin:process.env.FRONTEND_URL,
     credentials: true
