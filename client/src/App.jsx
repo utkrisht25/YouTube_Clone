@@ -8,6 +8,7 @@ import Index from "./pages/Index"
 import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
 import WatchPage from "./pages/WatchPage.jsx"
+import SearchResults from "./pages/SearchResults.jsx"
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
                 {/* we'll add our nested routes here */}
                 <Route index element={<Index />} />
                 <Route path="/watch/:videoId" element={<WatchPage />} />
+                <Route path="/search" element={<SearchResults />} />
                 <Route path={RouteChannels} element={<ChannelList />} />
                 <Route path={RouteChannel} element={<ChannelPage />} />
                 <Route path="/create-channel" element={<CreateChannel />} />

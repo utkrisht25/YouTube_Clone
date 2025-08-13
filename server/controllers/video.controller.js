@@ -2,21 +2,38 @@ import { Video } from "../models/video.model.js";
 import { Channel } from "../models/channel.model.js";
 import { handleError } from "../helpers/handleError.js";
 
+// Get all unique video categories
+export const getVideoCategories = async (req, res, next) => {
+  try {
+    const categories = await Video.distinct('category');
+    
+    res.status(200).json({
+      success: true,
+      categories,
+      message: "Categories fetched successfully",
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
 
 // Get all videos with basic information (for homepage)
 export const getAllVideos = async (req, res, next) => {
   try {
-    const videos = await Video.find({})
+    const { category } = req.query;
+    const filter = category && category !== 'all' ? { category } : {};
+    
+    console.log('Category filter:', filter); // Debug log
+    
+    const videos = await Video.find(filter)
       .populate({
         path: "channel",
         select: "name avatar subscribersCount",
       })
       .sort({ createdAt: -1 }); // Latest videos first
 
-    if (!videos.length) {
-      return next(handleError(404, "No videos found"));
-    }
-
+    // Always return a 200 status, even if no videos are found
     res.status(200).json({
       success: true,
       videos,

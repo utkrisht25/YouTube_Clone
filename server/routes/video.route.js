@@ -3,7 +3,8 @@ import {
     getAllVideos, 
     getVideoById, 
     getTrendingVideos, 
-    searchVideos 
+    searchVideos,
+    getVideoCategories
 } from '../controllers/video.controller.js';
 
 const router = express.Router();
@@ -16,6 +17,9 @@ router.get('/trending', getTrendingVideos);
 
 // Search videos
 router.get('/search', searchVideos);
+
+// Get all categories
+router.get('/categories', getVideoCategories);
 
 // Get single video by ID
 router.get('/:videoId', getVideoById);

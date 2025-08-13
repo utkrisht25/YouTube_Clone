@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Avatar } from './ui/avatar';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import userImg from '@/assets/images/user.png';
+import userImg from '@/assets/images/favicon_white.png';
 import { SidebarContext } from '../../src/Layout/Layout'; // Adjusted path based on history (update if needed)
 
 TimeAgo.addLocale(en);
@@ -62,7 +62,7 @@ const VideoCard = ({ video }) => {
           <Link to={`/channel/${video.channel?._id}`}>
             <Avatar>
               <img 
-                src={video.channel?.avatar || userImg} 
+                src={ userImg} 
                 alt={video.channel?.name || 'Channel avatar'}
                 className={`rounded-full ${avatarSize} object-cover`}
               />
