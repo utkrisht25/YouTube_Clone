@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { useSelector } from 'react-redux';
 import { FaCheckCircle } from "react-icons/fa";
 import { getEvn } from '@/helpers/getEnv';
+import defaultLogo from '@/assets/images/favicon_red.png';
 
 const formatSubscribers = (count) => {
     if (count >= 1000000) {
@@ -66,9 +67,9 @@ const ChannelList = () => {
                     >
                         <Avatar className="w-24 h-24">
                             <img
-                                src={channel.avatar}
+                                src={ defaultLogo}
                                 alt={channel.name}
-                                className="object-cover w-full h-full rounded-full"
+                                className="object-cover w-fit h-fit rounded-full"
                             />
                         </Avatar>
                         <div className="flex-1">

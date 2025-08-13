@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +11,8 @@ import {
   SidebarSeparator,
   SidebarGroupLabel,
 } from "../components/ui/sidebar.jsx";
+import { useSelector } from 'react-redux';
+import { RouteSignIn } from "@/helpers/RouteName";
 import logo from "@/assets/images/logo-dark.png";
 import { FaHome } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
@@ -63,6 +65,18 @@ const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
 };
 
 export function AppSidebar({ isOpen }) {
+  const { isLoggedIn } = useSelector(state => state.user);
+  const navigate = useNavigate();
+
+  // Handles sign in click and ensures redirect back to current page
+  const handleSignInClick = () => {
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/sign-in') {
+      sessionStorage.setItem('redirectAfterLogin', currentPath);
+    }
+    navigate(RouteSignIn);
+  };
+
   return (
     <Sidebar
       className={cn(
@@ -87,7 +101,7 @@ export function AppSidebar({ isOpen }) {
             <SidebarNavItem isOpen={isOpen} icon={FaHistory} to="/history">History</SidebarNavItem>
           </SidebarMenu>
         </SidebarGroup>
-        {isOpen && (
+        {isOpen && !isLoggedIn && (
           <>
             <SidebarSeparator />
             <SidebarGroup>
@@ -97,9 +111,12 @@ export function AppSidebar({ isOpen }) {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton className="bg-transparent ">
-                    <Button className="cursor-pointer bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-200">
-                      <FaRegUserCircle />
-                      sign in
+                    <Button 
+                      onClick={handleSignInClick}
+                      className="cursor-pointer bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-200 flex items-center gap-x-2"
+                    >
+                      <FaRegUserCircle size={20} />
+                      <span>Sign in</span>
                     </Button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
