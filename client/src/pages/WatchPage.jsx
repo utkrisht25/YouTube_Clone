@@ -42,7 +42,9 @@ const WatchPage = () => {
       const response = await fetch(`${getEvn('VITE_API_BASE_URL')}/comments`, {
         method: 'POST',
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ videoId, content: newComment }),
       });
       const data = await response.json();

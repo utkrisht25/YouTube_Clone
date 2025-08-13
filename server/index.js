@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import AuthRoute from './routes/Auth.route.js';
 import VideoRoute from './routes/video.route.js';
+import CommentRoute from './routes/comment.route.js';
 import './models/channel.model.js';  // Import models to ensure they're registered
 import './models/video.model.js';
 import './models/comment.model.js';
@@ -27,6 +28,7 @@ const PORT = process.env.PORT;
 //route setup will take place here
 app.use('/api/auth', AuthRoute);
 app.use('/api/videos', VideoRoute);
+app.use('/api/comments', CommentRoute);
 
 
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})
