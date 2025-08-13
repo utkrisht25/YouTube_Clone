@@ -101,7 +101,7 @@ const TopBar = ({ onToggleSidebar }) => {
         {!user.isLoggedIn ? 
           <Button asChild className='bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-100 flex items-center gap-x-1 sm:gap-x-2 px-2 sm:px-3 py-1 sm:py-2'>
             <Link to={RouteSignIn}>
-              <FaRegUserCircle size={16} className="sm:size-18 md:size-20" />
+              <FaRegUserCircle size={16} className="sm:size-3 md:size-6" />
               <span className="hidden sm:block text-sm md:text-base">Sign In</span>
             </Link>
           </Button> 
