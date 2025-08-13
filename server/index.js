@@ -24,6 +24,9 @@ app.use(express.json());
 app.use(cookieParser());
 // cookie parseer will parse the data from the cookie that it will get from the frontend 
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+if (process.env.NODE_ENV === 'production') {
+    process.env.FRONTEND_URL = 'https://mern-youtube-clone-yogi.onrender.com';
+}
 
 app.use(cors({
     origin:process.env.FRONTEND_URL,
