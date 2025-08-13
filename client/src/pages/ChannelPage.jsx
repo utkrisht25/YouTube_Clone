@@ -139,7 +139,7 @@ const ChannelPage = () => {
                             <p className="mt-4 text-gray-700">{channel.description}</p>
                             <Button
                                 onClick={handleSubscribe}
-                                disabled={subscribing || (isLoggedIn && channel.owner === user._id)}
+                                disabled={subscribing || (isLoggedIn && channel.owner?._id === user?._id)}
                                 variant={isSubscribed ? "outline" : "default"}
                                 className="mt-4"
                             >

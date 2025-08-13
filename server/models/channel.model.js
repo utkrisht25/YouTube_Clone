@@ -7,12 +7,17 @@ const channelSchema = new mongoose.Schema(
       required: true,
       unique: true, // Ensures no duplicate channel names
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     avatar: {
       type: String,
-      required: true,
+      default: 'https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg' // Default avatar URL
     },
     subscribersCount: {
-      type: Number, //  parse it (e.g., 25254545)
+      type: Number,
       default: 0,
     },
     description: {

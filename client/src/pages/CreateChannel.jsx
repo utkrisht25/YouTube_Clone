@@ -13,6 +13,7 @@ const CreateChannel = () => {
     const navigate = useNavigate();
     const { isLoggedIn, user } = useSelector(state => state.user);
     const [loading, setLoading] = React.useState(false);
+    const [uploading, setUploading] = React.useState(false);
     const [formData, setFormData] = React.useState({
         name: '',
         description: '',
@@ -23,10 +24,10 @@ const CreateChannel = () => {
         const file = e.target.files[0];
         if (file) {
             try {
+                setUploading(true);
                 const formData = new FormData();
                 formData.append('file', file);
                 
-                // Upload to your image hosting service
                 const response = await fetch(`${getEvn('VITE_API_BASE_URL')}/upload`, {
                     method: 'POST',
                     credentials: 'include',
@@ -40,8 +41,11 @@ const CreateChannel = () => {
                     ...prev,
                     avatar: data.fileUrl
                 }));
+                showToast('success', 'Image uploaded successfully');
             } catch (error) {
-                showToast('error', error.message);
+                showToast('error', error.message || 'Error uploading image');
+            } finally {
+                setUploading(false);
             }
         }
     };
@@ -60,7 +64,10 @@ const CreateChannel = () => {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    ...formData,
+                    owner: user._id
+                })
             });
 
             const data = await response.json();
@@ -129,7 +136,9 @@ const CreateChannel = () => {
                                 accept="image/*"
                                 onChange={handleImageChange}
                                 className="cursor-pointer"
+                                disabled={uploading}
                             />
+                            {uploading && <p className="mt-2 text-sm text-blue-500">Uploading image...</p>}
                         </div>
 
                         <Button 

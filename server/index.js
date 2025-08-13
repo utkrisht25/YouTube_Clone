@@ -7,6 +7,7 @@ import AuthRoute from './routes/Auth.route.js';
 import VideoRoute from './routes/video.route.js';
 import CommentRoute from './routes/comment.route.js';
 import ChannelRoute from './routes/channel.route.js';
+import UploadRoute from './routes/upload.route.js';
 import './models/channel.model.js';  // Import models to ensure they're registered
 import './models/video.model.js';
 import './models/comment.model.js';
@@ -31,6 +32,7 @@ app.use('/api/auth', AuthRoute);
 app.use('/api/videos', VideoRoute);
 app.use('/api/comments', CommentRoute);
 app.use('/api/channels', ChannelRoute);
+app.use('/api/upload', UploadRoute);
 
 
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})

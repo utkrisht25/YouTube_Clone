@@ -6,7 +6,8 @@ import { Video } from "../models/video.model.js";
 export const getAllChannels = async (req, res, next) => {
     try {
         const channels = await Channel.find()
-            .select('name avatar subscribersCount description isVerified')
+            .select('name avatar subscribersCount description isVerified owner')
+            .populate('owner', '_id username avatar')
             .sort({ subscribersCount: -1 });
 
         res.status(200).json({
@@ -25,7 +26,8 @@ export const getChannelById = async (req, res, next) => {
         const { channelId } = req.params;
 
         const channel = await Channel.findById(channelId)
-            .select('name avatar subscribersCount description isVerified');
+            .select('name avatar subscribersCount description isVerified owner')
+            .populate('owner', '_id username');
 
         if (!channel) {
             return next(handleError(404, "Channel not found"));

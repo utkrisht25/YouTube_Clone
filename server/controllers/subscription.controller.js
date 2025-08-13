@@ -15,7 +15,7 @@ export const subscribeChannel = async (req, res, next) => {
         }
 
         // Check if user is trying to subscribe to their own channel
-        if (channel.owner.toString() === userId.toString()) {
+        if (channel.owner && userId && channel.owner.toString() === userId.toString()) {
             return next(handleError(400, "You cannot subscribe to your own channel"));
         }
 
