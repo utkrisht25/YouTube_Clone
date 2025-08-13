@@ -36,7 +36,6 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiFeedbackLine } from "react-icons/ri";
 import { Button } from "./ui/button.jsx";
 import { cn } from "@/lib/utils.js";
-import Index from "@/pages/Index.jsx";
 
 // Helper component to keep the main code clean
 const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
@@ -50,16 +49,19 @@ const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
           "flex items-center w-full rounded-lg text-gray-700 hover:bg-gray-100",
           // Conditional styles based on 'isOpen'
           isOpen
-            ? "gap-x-3 p-2" // When OPEN: horizontal layout with padding
-            : "h-18 flex-col justify-center gap-y-1 p-1" // When COLLAPSED: vertical layout
+            ? "gap-x-2 sm:gap-x-3 p-1.5 sm:p-2" // When OPEN: horizontal layout with padding
+            : "h-14 sm:h-18 flex-col justify-center gap-y-0.5 sm:gap-y-1 p-0.5 sm:p-1" // When COLLAPSED: vertical layout
         )}
       >
         <Link to={to}>
-          <Icon size={22} className="flex-shrink-0" />
+          <Icon size={18} className="sm:hidden flex-shrink-0" />
+          <Icon size={22} className="hidden sm:block flex-shrink-0" />
           <span
             className={cn(
               // Conditional styles for the text
-              isOpen ? "text-sm font-medium" : "text-[9px]"
+              isOpen 
+                ? "text-xs sm:text-sm font-medium" 
+                : "text-[8px] sm:text-[9px]"
             )}
           >
             {children}
@@ -86,13 +88,13 @@ export function AppSidebar({ isOpen }) {
   return (
     <Sidebar
       className={cn(
-        " left-0 top-16 h-[calc(100vh-64px)] transition-all duration-300 ease-in-out bg-white z-10",
-        isOpen ? "w-60" : "w-[72px]"
+        "left-0 top-16 h-[calc(100vh-64px)] transition-all duration-300 ease-in-out bg-white z-10",
+        isOpen ? "w-48 sm:w-60" : "w-16 sm:w-[72px]"
       )}
     >
       <SidebarHeader className="bg-white">
         <Link to={RouteIndex}>
-          <img src={logo} alt="logo image" width={120} />
+          <img src={logo} alt="logo image" className="w-24 sm:w-32 md:w-[120px]" />
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -146,13 +148,13 @@ export function AppSidebar({ isOpen }) {
             </SidebarGroup>
             <SidebarSeparator />
             <SidebarGroup>
-              <SidebarGroupLabel className="text-black text-lg">
+              <SidebarGroupLabel className="text-black text-base sm:text-lg px-2">
                 Explore
               </SidebarGroupLabel>
-              <SidebarMenu>
+              <SidebarMenu className="text-sm sm:text-base">
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
-                    <FiShoppingBag />
+                  <SidebarMenuButton className="p-1.5 sm:p-2">
+                    <FiShoppingBag className="text-lg sm:text-xl" />
                     <Link to="/">Shopping</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
