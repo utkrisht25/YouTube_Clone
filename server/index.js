@@ -11,8 +11,10 @@ import UploadRoute from './routes/upload.route.js';
 import './models/channel.model.js';  // Import models to ensure they're registered
 import './models/video.model.js';
 import './models/comment.model.js';
+import path from 'path';
 
 dotenv.config();
+const _dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
@@ -34,6 +36,11 @@ app.use('/api/comments', CommentRoute);
 app.use('/api/channels', ChannelRoute);
 app.use('/api/upload', UploadRoute);
 
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})
 .then(() => console.log('connected to databse'))
