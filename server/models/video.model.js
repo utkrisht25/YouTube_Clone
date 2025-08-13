@@ -1,56 +1,34 @@
 import mongoose, { Schema } from "mongoose";
 
 const videoSchema = new Schema(
-    {
-        videoUrl: {
-            type: String,
-            required: true,
-        },
-        thumbnailUrl: {
-            type: String,
-            required: true,
-        },
-        title: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        duration: {
-            type: Number,
-            required: true,
-        },
-        views: {
-            type: Number,
-            default: 0,
-        },
-        // CHANGED: The video is now owned by a Channel, not a User directly.
-        channel: {
-            type: Schema.Types.ObjectId,
-            ref: "Channel",
-            required: true,
-        },
-        // NEW: Storing who liked/disliked the video prevents multiple votes.
-        // The total count is simply the length of these arrays.
-        likes: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
-        dislikes: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
+  {
+    title: String,
+    thumbnailUrl: String,
+    duration: String,
+    uploadTime: String,
+    views: String, // Consider changing to Number for easier calculations/sorting
+    author: String,
+    videoUrl: String,
+    description: String,
+    likes: Number,
+    dislikes: Number,
+    commentsCount: Number,
+    isLive: Boolean,
+    isVerified: Boolean,
+    tags: [String],
+    category: String,
+    language: String,
+    resolution: String,
+    isHD: Boolean,
+    license: String,
+    channel: {
+      type: Schema.Types.ObjectId,
+      ref: "Channel", // References your Channel model
     },
-    {
-        timestamps: true,
-    }
+  },
+  {
+    timestamps: true,
+  }
 );
 
 export const Video = mongoose.model("Video", videoSchema);

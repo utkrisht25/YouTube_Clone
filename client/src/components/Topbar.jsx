@@ -21,7 +21,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import usericon from '@/assets/images/user.png'
 import { FaPlus, FaRegUser } from 'react-icons/fa';
+<<<<<<< HEAD
 import { IoMdSettings } from "react-icons/io";
+=======
+>>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
 import { showToast } from '@/helpers/showToast';
 import { getEvn } from '@/helpers/getEnv';
 import { removeUser } from '@/redux/user/user.slice';
@@ -48,6 +51,10 @@ const TopBar = ({ onToggleSidebar }) => {
             showToast('error', error.message)
         }
   }
+<<<<<<< HEAD
+=======
+  console.log('User state:', user);
+>>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
   return (
      // Main container: Keeps everything in a row, spaced out
      <div className='flex justify-between items-center h-16 px-4 fixed bg-white w-full z-20 border-b'>
@@ -96,6 +103,7 @@ const TopBar = ({ onToggleSidebar }) => {
             </Link>
         </Button> 
         : <DropdownMenu>
+<<<<<<< HEAD
                         <DropdownMenuTrigger className="mr-3">
                             <Avatar>
                                 <AvatarImage src={user.user.avatar || usericon} />
@@ -134,11 +142,36 @@ const TopBar = ({ onToggleSidebar }) => {
                                         <span>Switch account</span>
                                         <span className="text-xs text-gray-500">All your YouTube content</span>
                                     </div>
+=======
+                        <DropdownMenuTrigger>
+                            <Avatar>
+                                <AvatarImage src={user.user.avatar || usericon } />
+                            </Avatar>
+
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>
+                                <p>{user.user.username}</p>
+                                <p className='text-sm'>{user.user.email}</p>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <Link to=''>
+                                    <FaRegUser />
+                                    Profile
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <Link to=''>
+                                    <FaPlus />
+                                    Create Blog
+>>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
                                 </Link>
                             </DropdownMenuItem>
 
                             <DropdownMenuSeparator />
 
+<<<<<<< HEAD
                             <DropdownMenuItem className="focus:bg-gray-100">
                                 <div className="flex items-center gap-x-3 py-2">
                                     <IoMdSettings className="text-xl" />
@@ -151,6 +184,11 @@ const TopBar = ({ onToggleSidebar }) => {
                                     <IoLogOutOutline className="text-xl" />
                                     <span>Sign out</span>
                                 </div>
+=======
+                            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                                <IoLogOutOutline color='red' />
+                                Logout
+>>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                 </DropdownMenu>

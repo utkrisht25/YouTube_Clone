@@ -3,52 +3,54 @@ import { Video } from "../models/video.model.js";
 
 // Get all videos with basic information (for homepage)
 export const getAllVideos = async (req, res, next) => {
-    try {
-        const videos = await Video.find({})
-            .populate({
-                path: 'channel',
-                select: 'name avatar subscribersCount'
-            })
-            .select('title thumbnailUrl views duration createdAt')
-            .sort({ createdAt: -1 }); // Latest videos first
+  try {
+    const videos = await Video.find({})
+      .populate({
+        path: "channel",
+        select: "name avatar subscribersCount",
+      })
+      .sort({ createdAt: -1 }); // Latest videos first
 
-        res.status(200).json({
-            success: true,
-            videos,
-            message: "Videos fetched successfully"
-        });
-    } catch (error) {
-        next(handleError(500, error.message));
+    if (!videos.length) {
+      return next(handleError(404, "No videos found"));
     }
+
+    res.status(200).json({
+      success: true,
+      videos,
+      message: "Videos fetched successfully",
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
 };
 
 // Get a single video by ID with full details
 export const getVideoById = async (req, res, next) => {
-    try {
-        const { videoId } = req.params;
+  try {
+    const { videoId } = req.params;
 
-        const video = await Video.findById(videoId)
-            .populate({
-                path: 'channel',
-                select: 'name avatar subscribersCount'
-            });
+    const video = await Video.findById(videoId).populate({
+      path: "channel",
+      select: "name avatar subscribersCount",
+    });
 
-        if (!video) {
-            return next(handleError(404, "Video not found"));
-        }
-
-        // Increment view count
-        video.views += 1;
-        await video.save();
-
-        res.status(200).json({
-            success: true,
-            video,
-            message: "Video fetched successfully"
-        });
-    } catch (error) {
-        next(handleError(500, error.message));
+    if (!video) {
+      return next(handleError(404, "Video not found"));
     }
+
+    // Optional: Increment views dynamically (uncomment if needed)
+    // video.views = (parseInt(video.views) || 0) + 1;
+    // await video.save();
+
+    res.status(200).json({
+      success: true,
+      video,
+      message: "Video fetched successfully",
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
 };
 
 // Get trending videos (based on views in last 7 days)
@@ -63,7 +65,7 @@ export const getTrendingVideos = async (req, res, next) => {
                 path: 'channel',
                 select: 'name avatar subscribersCount'
             })
-            .select('title thumbnailUrl views duration createdAt')
+            .select('title thumbnailUrl views duration createdAt channel')
             .sort({ views: -1 })
             .limit(20);
 
@@ -92,7 +94,7 @@ export const searchVideos = async (req, res, next) => {
                 path: 'channel',
                 select: 'name avatar subscribersCount'
             })
-            .select('title thumbnailUrl views duration createdAt')
+            .select('title thumbnailUrl views duration createdAt channel')
             .sort({ views: -1 });
 
         res.status(200).json({

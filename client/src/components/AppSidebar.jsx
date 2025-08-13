@@ -66,7 +66,7 @@ export function AppSidebar({ isOpen }) {
   return (
     <Sidebar
       className={cn(
-        "fixed left-0 top-16 h-[calc(100vh-64px)] transition-all duration-300 ease-in-out bg-white z-10",
+        " left-0 top-16 h-[calc(100vh-64px)] transition-all duration-300 ease-in-out bg-white z-10",
         isOpen ? "w-60" : "w-[72px]"
       )}
     >
