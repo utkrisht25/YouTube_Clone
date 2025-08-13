@@ -80,10 +80,12 @@ const TopBar = ({ onToggleSidebar }) => {
       {/* RIGHT SECTION: Action Buttons */}
       <div className='flex items-center gap-x-3 flex-shrink-0'>
 
-        {/* --- 1. CREATE BUTTON --- */}
-        <Button variant="ghost" className='hidden md:flex items-center gap-2 rounded-full border px-4'>
-          <RiVideoAddLine size={22} />
-          <span className="font-semibold">Create</span>
+        {/* --- 1. CHANNELS BUTTON --- */}
+        <Button asChild variant="ghost" className='hidden md:flex items-center gap-2 rounded-full border px-4'>
+          <Link to="/channels">
+            <RiVideoAddLine size={22} />
+            <span className="font-semibold">Channels</span>
+          </Link>
         </Button>
 
         {/* --- 2. NOTIFICATIONS BUTTON --- */}

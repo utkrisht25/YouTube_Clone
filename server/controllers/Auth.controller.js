@@ -33,13 +33,12 @@ export const Login = async(req,res,next) =>{
         if(!user){
             next(handleError(404, 'user not found.'))
         }
-        const hashedPassword = user.password;
-        const comparePassword = bcryptjs.compare(password,hashedPassword );
-        if(!comparePassword){
+        const isValidPassword = await bcryptjs.compare(password, user.password);
+        if(!isValidPassword){
             next(handleError(403, 'invalid login credentials.'))
         }
         const token = jwt.sign({
-            _id:user._id,
+            id: user._id, // Using 'id' to match what verifyToken expects
             username: user.username,
             email: user.email,
             avatar: user.avatar
@@ -82,7 +81,7 @@ export const GoogleLogin = async (req, res, next) =>{
             user = await newUser.save()
         }
         const token = jwt.sign({
-            _id: user._id,
+            id: user._id, // Using 'id' to match what verifyToken expects
             username: user.username,
             email: user.email,
             avatar: user.avatar
