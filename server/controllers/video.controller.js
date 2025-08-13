@@ -1,5 +1,7 @@
-import { handleError } from "../helpers/handleError.js";
 import { Video } from "../models/video.model.js";
+import { Channel } from "../models/channel.model.js";
+import { handleError } from "../helpers/handleError.js";
+
 
 // Get all videos with basic information (for homepage)
 export const getAllVideos = async (req, res, next) => {
@@ -25,23 +27,27 @@ export const getAllVideos = async (req, res, next) => {
   }
 };
 
-// Get a single video by ID with full details
+// Get a single video by ID with full details (includes comments)
 export const getVideoById = async (req, res, next) => {
   try {
     const { videoId } = req.params;
 
-    const video = await Video.findById(videoId).populate({
-      path: "channel",
-      select: "name avatar subscribersCount",
-    });
+    const video = await Video.findById(videoId)
+      .populate({
+        path: "channel",
+        select: "name avatar subscribersCount"
+      })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+          select: "username avatar email"
+        }
+      });
 
     if (!video) {
       return next(handleError(404, "Video not found"));
     }
-
-    // Optional: Increment views dynamically (uncomment if needed)
-    // video.views = (parseInt(video.views) || 0) + 1;
-    // await video.save();
 
     res.status(200).json({
       success: true,

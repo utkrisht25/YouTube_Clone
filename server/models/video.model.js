@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
+import { Channel } from './channel.model.js';
 
-const videoSchema = new Schema(
+const videoSchema = new mongoose.Schema(
   {
     title: String,
     thumbnailUrl: String,
@@ -22,9 +23,13 @@ const videoSchema = new Schema(
     isHD: Boolean,
     license: String,
     channel: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Channel", // References your Channel model
     },
+     comments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }]
   },
   {
     timestamps: true,

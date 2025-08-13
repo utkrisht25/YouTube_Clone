@@ -21,10 +21,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import usericon from '@/assets/images/user.png'
 import { FaPlus, FaRegUser } from 'react-icons/fa';
-<<<<<<< HEAD
+
 import { IoMdSettings } from "react-icons/io";
-=======
->>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
+
 import { showToast } from '@/helpers/showToast';
 import { getEvn } from '@/helpers/getEnv';
 import { removeUser } from '@/redux/user/user.slice';
@@ -51,10 +50,10 @@ const TopBar = ({ onToggleSidebar }) => {
             showToast('error', error.message)
         }
   }
-<<<<<<< HEAD
-=======
+
+
   console.log('User state:', user);
->>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
+
   return (
      // Main container: Keeps everything in a row, spaced out
      <div className='flex justify-between items-center h-16 px-4 fixed bg-white w-full z-20 border-b'>
@@ -103,97 +102,64 @@ const TopBar = ({ onToggleSidebar }) => {
             </Link>
         </Button> 
         : <DropdownMenu>
-<<<<<<< HEAD
-                        <DropdownMenuTrigger className="mr-3">
-                            <Avatar>
-                                <AvatarImage src={user.user.avatar || usericon} />
-                            </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-72 mr-3">
-                            <div className="flex items-center gap-x-3 p-3">
-                                <Avatar className="w-10 h-10">
-                                    <AvatarImage src={user.user.avatar || usericon} />
-                                </Avatar>
-                                <div className="flex flex-col">
-                                    <p className="font-semibold">{user.user.username}</p>
-                                    <p className="text-sm text-gray-500">{user.user.email}</p>
-                                </div>
-                            </div>
-                            <DropdownMenuSeparator />
-                            
-                            <DropdownMenuItem asChild className="focus:bg-gray-100">
-                                <Link to='' className="flex items-center gap-x-3 py-2">
-                                    <FaRegUser className="text-xl" />
-                                    <span>Your channel</span>
-                                </Link>
-                            </DropdownMenuItem>
-                            
-                            <DropdownMenuItem asChild className="focus:bg-gray-100">
-                                <Link to='' className="flex items-center gap-x-3 py-2">
-                                    <FaPlus className="text-xl" />
-                                    <span>YouTube Studio</span>
-                                </Link>
-                            </DropdownMenuItem>
+            <DropdownMenuTrigger className="mr-3">
+                <Avatar>
+                    <AvatarImage src={user.user.avatar || usericon} />
+                </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-72 mr-3">
+                <div className="flex items-center gap-x-3 p-3">
+                    <Avatar className="w-10 h-10">
+                        <AvatarImage src={user.user.avatar || usericon} />
+                    </Avatar>
+                    <div className="flex flex-col">
+                        <p className="font-semibold">{user.user.username}</p>
+                        <p className="text-sm text-gray-500">{user.user.email}</p>
+                    </div>
+                </div>
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem asChild className="focus:bg-gray-100">
+                    <Link to='' className="flex items-center gap-x-3 py-2">
+                        <FaRegUser className="text-xl" />
+                        <span>Your channel</span>
+                    </Link>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild className="focus:bg-gray-100">
+                    <Link to='' className="flex items-center gap-x-3 py-2">
+                        <FaPlus className="text-xl" />
+                        <span>YouTube Studio</span>
+                    </Link>
+                </DropdownMenuItem>
 
-                            <DropdownMenuItem asChild className="focus:bg-gray-100">
-                                <Link to='' className="flex items-center gap-x-3 py-2">
-                                    <FaRegUserCircle className="text-xl" />
-                                    <div className="flex flex-col">
-                                        <span>Switch account</span>
-                                        <span className="text-xs text-gray-500">All your YouTube content</span>
-                                    </div>
-=======
-                        <DropdownMenuTrigger>
-                            <Avatar>
-                                <AvatarImage src={user.user.avatar || usericon } />
-                            </Avatar>
+                <DropdownMenuItem asChild className="focus:bg-gray-100">
+                    <Link to='' className="flex items-center gap-x-3 py-2">
+                        <FaRegUserCircle className="text-xl" />
+                        <div className="flex flex-col">
+                            <span>Switch account</span>
+                            <span className="text-xs text-gray-500">All your YouTube content</span>
+                        </div>
+                    </Link>
+                </DropdownMenuItem>
 
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>
-                                <p>{user.user.username}</p>
-                                <p className='text-sm'>{user.user.email}</p>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem asChild className="cursor-pointer">
-                                <Link to=''>
-                                    <FaRegUser />
-                                    Profile
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild className="cursor-pointer">
-                                <Link to=''>
-                                    <FaPlus />
-                                    Create Blog
->>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
-                                </Link>
-                            </DropdownMenuItem>
+                <DropdownMenuSeparator />
 
-                            <DropdownMenuSeparator />
+                <DropdownMenuItem className="focus:bg-gray-100">
+                    <div className="flex items-center gap-x-3 py-2">
+                        <IoMdSettings className="text-xl" />
+                        <span>Settings</span>
+                    </div>
+                </DropdownMenuItem>
 
-<<<<<<< HEAD
-                            <DropdownMenuItem className="focus:bg-gray-100">
-                                <div className="flex items-center gap-x-3 py-2">
-                                    <IoMdSettings className="text-xl" />
-                                    <span>Settings</span>
-                                </div>
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem onClick={handleLogout} className="focus:bg-gray-100 text-red-600">
-                                <div className="flex items-center gap-x-3 py-2">
-                                    <IoLogOutOutline className="text-xl" />
-                                    <span>Sign out</span>
-                                </div>
-=======
-                            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-                                <IoLogOutOutline color='red' />
-                                Logout
->>>>>>> e67257f1e75d7194b2b0fadd90e28b4fa5eef8f6
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                </DropdownMenu>
-        
-        }
+                <DropdownMenuItem onClick={handleLogout} className="focus:bg-gray-100 text-red-600">
+                    <div className="flex items-center gap-x-3 py-2">
+                        <IoLogOutOutline className="text-xl" />
+                        <span>Sign out</span>
+                    </div>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>}
 
       </div>
      </div>

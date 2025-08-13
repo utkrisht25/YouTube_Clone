@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import AuthRoute from './routes/Auth.route.js';
 import VideoRoute from './routes/video.route.js';
+import './models/channel.model.js';  // Import models to ensure they're registered
+import './models/video.model.js';
+import './models/comment.model.js';
 
 dotenv.config();
 const app = express();

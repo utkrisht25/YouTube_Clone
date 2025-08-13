@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const channelSchema = new Schema(
+const channelSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -29,5 +29,4 @@ const channelSchema = new Schema(
     timestamps: true,
   }
 );
-
-export const Channel = mongoose.model("Channel", channelSchema);
+export const Channel = mongoose.model('Channel', channelSchema);
