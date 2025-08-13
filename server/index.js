@@ -12,9 +12,11 @@ import './models/channel.model.js';  // Import models to ensure they're register
 import './models/video.model.js';
 import './models/comment.model.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
-const _dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(express.json());
@@ -36,10 +38,12 @@ app.use('/api/comments', CommentRoute);
 app.use('/api/channels', ChannelRoute);
 app.use('/api/upload', UploadRoute);
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// Handle React routing, return all requests to React app
+app.get('/*catchAll', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 })
 
 mongoose.connect(process.env.MONGO_URI, {dbName: 'yogi-yt-clone'})
