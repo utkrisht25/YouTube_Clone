@@ -16,9 +16,16 @@ export const addComment = async (req, res, next) => {
       user: req.user?._id, // Assumes authenticated user; adjust if needed
     });
 
+    // Add comment reference to video
+    video.comments.push(comment._id);
+    await video.save();
+
+    // Populate user details if needed
+    const populatedComment = await Comment.findById(comment._id).populate('user', 'username avatar');
+
     res.status(201).json({
       success: true,
-      comment,
+      comment: populatedComment,
       message: "Comment added successfully",
     });
   } catch (error) {

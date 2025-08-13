@@ -39,9 +39,10 @@ export const getVideoById = async (req, res, next) => {
       })
       .populate({
         path: "comments",
+        options: { sort: { createdAt: -1 } }, // Show newest comments first
         populate: {
           path: "user",
-          select: "username avatar email"
+          select: "username avatar"
         }
       });
 
