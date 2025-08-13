@@ -11,8 +11,8 @@ import {
   SidebarSeparator,
   SidebarGroupLabel,
 } from "../components/ui/sidebar.jsx";
-import { useSelector } from 'react-redux';
-import { RouteSignIn } from "@/helpers/RouteName";
+import { useSelector } from "react-redux";
+import { RouteIndex, RouteSignIn } from "@/helpers/RouteName";
 import logo from "@/assets/images/logo-dark.png";
 import { FaHome } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
@@ -36,26 +36,32 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiFeedbackLine } from "react-icons/ri";
 import { Button } from "./ui/button.jsx";
 import { cn } from "@/lib/utils.js";
+import Index from "@/pages/Index.jsx";
 
 // Helper component to keep the main code clean
 const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
   const Icon = icon;
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild className={cn(
-        // Base styles for the button
-        "flex items-center w-full rounded-lg text-gray-700 hover:bg-gray-100",
-        // Conditional styles based on 'isOpen'
-        isOpen 
-          ? "gap-x-3 p-2" // When OPEN: horizontal layout with padding
-          : "h-18 flex-col justify-center gap-y-1 p-1" // When COLLAPSED: vertical layout
-      )}>
+      <SidebarMenuButton
+        asChild
+        className={cn(
+          // Base styles for the button
+          "flex items-center w-full rounded-lg text-gray-700 hover:bg-gray-100",
+          // Conditional styles based on 'isOpen'
+          isOpen
+            ? "gap-x-3 p-2" // When OPEN: horizontal layout with padding
+            : "h-18 flex-col justify-center gap-y-1 p-1" // When COLLAPSED: vertical layout
+        )}
+      >
         <Link to={to}>
           <Icon size={22} className="flex-shrink-0" />
-          <span className={cn(
-            // Conditional styles for the text
-            isOpen ? "text-sm font-medium" : "text-[9px]"
-          )}>
+          <span
+            className={cn(
+              // Conditional styles for the text
+              isOpen ? "text-sm font-medium" : "text-[9px]"
+            )}
+          >
             {children}
           </span>
         </Link>
@@ -65,14 +71,14 @@ const SidebarNavItem = ({ isOpen, icon, to = "/", children }) => {
 };
 
 export function AppSidebar({ isOpen }) {
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   // Handles sign in click and ensures redirect back to current page
   const handleSignInClick = () => {
     const currentPath = window.location.pathname;
-    if (currentPath !== '/sign-in') {
-      sessionStorage.setItem('redirectAfterLogin', currentPath);
+    if (currentPath !== "/sign-in") {
+      sessionStorage.setItem("redirectAfterLogin", currentPath);
     }
     navigate(RouteSignIn);
   };
@@ -85,20 +91,36 @@ export function AppSidebar({ isOpen }) {
       )}
     >
       <SidebarHeader className="bg-white">
-        <img src={logo} alt="logo image" width={120} />
+        <Link to={RouteIndex}>
+          <img src={logo} alt="logo image" width={120} />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
-       <SidebarGroup>
+        <SidebarGroup>
           <SidebarMenu>
             {/* Using the new, cleaner component */}
-            <SidebarNavItem isOpen={isOpen} icon={FaHome} to="/">Home</SidebarNavItem>
-            <SidebarNavItem isOpen={isOpen} icon={SiYoutubeshorts} to="/shorts">Shorts</SidebarNavItem>
-            <SidebarNavItem isOpen={isOpen} icon={MdOutlineSubscriptions} to="/subscriptions">Subscriptions</SidebarNavItem>
-            
+            <SidebarNavItem isOpen={isOpen} icon={FaHome} to={RouteIndex}>
+              Home
+            </SidebarNavItem>
+            <SidebarNavItem isOpen={isOpen} icon={SiYoutubeshorts} to="/shorts">
+              Shorts
+            </SidebarNavItem>
+            <SidebarNavItem
+              isOpen={isOpen}
+              icon={MdOutlineSubscriptions}
+              to="/subscriptions"
+            >
+              Subscriptions
+            </SidebarNavItem>
+
             <SidebarSeparator className={cn(!isOpen && "my-1")} />
-            
-            <SidebarNavItem isOpen={isOpen} icon={FaUserCircle} to="/you">You</SidebarNavItem>
-            <SidebarNavItem isOpen={isOpen} icon={FaHistory} to="/history">History</SidebarNavItem>
+
+            <SidebarNavItem isOpen={isOpen} icon={FaUserCircle} to="/you">
+              You
+            </SidebarNavItem>
+            <SidebarNavItem isOpen={isOpen} icon={FaHistory} to="/history">
+              History
+            </SidebarNavItem>
           </SidebarMenu>
         </SidebarGroup>
         {isOpen && !isLoggedIn && (
@@ -111,7 +133,7 @@ export function AppSidebar({ isOpen }) {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton className="bg-transparent ">
-                    <Button 
+                    <Button
                       onClick={handleSignInClick}
                       className="cursor-pointer bg-transparent font-bold text-blue-600 rounded-full border hover:bg-blue-200 flex items-center gap-x-2"
                     >

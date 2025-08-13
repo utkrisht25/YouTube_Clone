@@ -29,13 +29,13 @@ export const Register = async (req,res , next) => {
 export const Login = async(req,res,next) =>{
     try {
         const {email, password} = req.body;
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate('channels', '_id name');
         if(!user){
-            next(handleError(404, 'user not found.'))
+            return next(handleError(404, 'user not found.'))
         }
-        const isValidPassword = await bcryptjs.compare(password, user.password);
+        const isValidPassword =  bcryptjs.compare(password, user.password);
         if(!isValidPassword){
-            next(handleError(403, 'invalid login credentials.'))
+            return next(handleError(403, 'invalid login credentials.'))
         }
         const token = jwt.sign({
             id: user._id, // Using 'id' to match what verifyToken expects
@@ -66,7 +66,7 @@ export const GoogleLogin = async (req, res, next) =>{
     try {
         const {username , email , avatar} = req.body;
         let user
-        user = await User.findOne({email})
+        user = await User.findOne({email}).populate('channels', '_id name')
         if(!user){
             // now we get the user from the google login way
             const password = crypto.randomBytes(16).toString('hex');

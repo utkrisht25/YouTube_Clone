@@ -6,7 +6,7 @@ import { CgMenu } from "react-icons/cg"; // Hamburger menu icon
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiVideoAddLine } from "react-icons/ri"; // Icon for 'Create'
 import { IoMdNotificationsOutline } from "react-icons/io"; // Icon for 'Notifications'
-import { RouteSignIn , RouteIndex} from "@/helpers/RouteName";
+import { RouteSignIn, RouteIndex, RouteCreateChannel } from "@/helpers/RouteName";
 import { useDispatch, useSelector } from 'react-redux';
 import {IoLogOutOutline } from 'react-icons/io5';
 
@@ -52,7 +52,13 @@ const TopBar = ({ onToggleSidebar }) => {
   }
 
 
-  console.log('User state:', user);
+  // Debug logs to check the user data structure
+  console.log('Full user state:', user);
+  console.log('User channels:', user.user?.channels);
+  
+  // Get last channel safely with optional chaining
+  const lastChannel = user.user?.channels?.[user.user?.channels?.length - 1];
+
 
   return (
      // Main container: Keeps everything in a row, spaced out
@@ -64,9 +70,9 @@ const TopBar = ({ onToggleSidebar }) => {
         <Button onClick={onToggleSidebar} variant="ghost" size="icon" className="rounded-full">
           <CgMenu size={24} />
         </Button>
-        <button>
+        <Link to={RouteIndex}>
           <img src={logo} alt="Logo" className="w-28 ml-8 mt-3 mb-3" />
-        </button>
+        </Link>
       </div>
 
       {/* MIDDLE SECTION: Search Box */}
@@ -122,7 +128,12 @@ const TopBar = ({ onToggleSidebar }) => {
                 <DropdownMenuSeparator />
                 
                 <DropdownMenuItem asChild className="focus:bg-gray-100">
-                    <Link to='' className="flex items-center gap-x-3 py-2">
+                    <Link 
+                      to={lastChannel?._id 
+                        ? `/channel/${lastChannel._id}`
+                        : RouteCreateChannel} 
+                      className="flex items-center gap-x-3 py-2"
+                    >
                         <FaRegUser className="text-xl" />
                         <span>Your channel</span>
                     </Link>
