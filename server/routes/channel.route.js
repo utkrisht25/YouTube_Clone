@@ -7,6 +7,10 @@ import {
     createChannel,
     updateChannel
 } from '../controllers/channel.controller.js';
+import {
+    subscribeChannel,
+    checkSubscription
+} from '../controllers/subscription.controller.js';
 
 const ChannelRoute = express.Router();
 
@@ -18,5 +22,7 @@ ChannelRoute.get('/:channelId/videos', getChannelVideos);
 // Protected routes - requires authentication
 ChannelRoute.post('/', verifyToken, createChannel);
 ChannelRoute.put('/:channelId', verifyToken, updateChannel);
+ChannelRoute.post('/:channelId/subscribe', verifyToken, subscribeChannel);
+ChannelRoute.get('/:channelId/subscription', verifyToken, checkSubscription);
 
 export default ChannelRoute;

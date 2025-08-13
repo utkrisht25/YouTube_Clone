@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Avatar } from './ui/avatar';
 import { Button } from './ui/button';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,8 @@ const formatSubscribers = (count) => {
 };
 
 const ChannelList = () => {
-    const { isLoggedIn } = useSelector(state => state.user);
+    const navigate = useNavigate();
+    const { isLoggedIn, user } = useSelector(state => state.user);
     const [channels, setChannels] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
 
@@ -48,7 +49,10 @@ const ChannelList = () => {
     return (
         <div className="p-6 max-w-4xl mx-auto">
             {isLoggedIn && (
-                <Button className="mb-6 bg-blue-600 text-white hover:bg-blue-700">
+                <Button 
+                    className="mb-6 bg-blue-600 text-white hover:bg-blue-700"
+                    onClick={() => navigate('/create-channel')}
+                >
                     Create Channel
                 </Button>
             )}

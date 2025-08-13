@@ -3,6 +3,7 @@ import Layout from "./Layout/Layout.jsx"
 import { RouteIndex, RouteSignIn, RouteSignUp, RouteChannels, RouteChannel } from "./helpers/RouteName"
 import ChannelList from "./components/ChannelList"
 import ChannelPage from "./pages/ChannelPage"
+import CreateChannel from "./pages/CreateChannel"
 import Index from "./pages/Index"
 import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
@@ -18,6 +19,7 @@ const App = () => {
                 <Route path="/watch/:videoId" element={<WatchPage />} />
                 <Route path={RouteChannels} element={<ChannelList />} />
                 <Route path={RouteChannel} element={<ChannelPage />} />
+                <Route path="/create-channel" element={<CreateChannel />} />
              </Route >
             <Route path={RouteSignIn} element={<SignIn />} />
             <Route path={RouteSignUp} element={<SignUp />} />

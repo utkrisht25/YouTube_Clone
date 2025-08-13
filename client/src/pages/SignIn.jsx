@@ -52,8 +52,17 @@ const SignIn = () => {
       if (!response.ok) {
         return showToast("error", data.message);
       }
-      dispatch(setUser(data.user))
-      navigate(RouteIndex);
+      dispatch(setUser(data.user));
+      
+      // Check if there's a redirect path stored
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+      if (redirectPath) {
+        sessionStorage.removeItem('redirectAfterLogin'); // Clear the stored path
+        navigate(redirectPath);
+      } else {
+        navigate(RouteIndex);
+      }
+      
       showToast("success", data.message);
     } catch (error) {
       showToast("error", error.message);

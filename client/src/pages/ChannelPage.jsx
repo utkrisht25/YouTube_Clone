@@ -6,16 +6,70 @@ import VideoCard from '@/components/VideoCard';
 import { FaCheckCircle } from "react-icons/fa";
 import { getEvn } from '@/helpers/getEnv';
 import { showToast } from '@/helpers/showToast';
+import { useSelector } from 'react-redux';
 
 const ChannelPage = () => {
     const { channelId } = useParams();
+    const { isLoggedIn, user } = useSelector(state => state.user);
     const [channel, setChannel] = React.useState(null);
     const [videos, setVideos] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [isSubscribed, setIsSubscribed] = React.useState(false);
+    const [subscribing, setSubscribing] = React.useState(false);
 
     React.useEffect(() => {
         fetchChannelAndVideos();
-    }, [channelId]);
+        if (isLoggedIn) {
+            checkSubscriptionStatus();
+        }
+    }, [channelId, isLoggedIn]);
+
+    const checkSubscriptionStatus = async () => {
+        try {
+            const response = await fetch(
+                `${getEvn('VITE_API_BASE_URL')}/channels/${channelId}/subscription`,
+                { credentials: 'include' }
+            );
+            const data = await response.json();
+            if (response.ok) {
+                setIsSubscribed(data.isSubscribed);
+            }
+        } catch (error) {
+            console.error('Error checking subscription:', error);
+        }
+    };
+
+    const handleSubscribe = async () => {
+        if (!isLoggedIn) {
+            showToast('error', 'Please sign in to subscribe');
+            return;
+        }
+
+        try {
+            setSubscribing(true);
+            const response = await fetch(
+                `${getEvn('VITE_API_BASE_URL')}/channels/${channelId}/subscribe`,
+                {
+                    method: 'POST',
+                    credentials: 'include'
+                }
+            );
+            const data = await response.json();
+            
+            if (!response.ok) throw new Error(data.message);
+            
+            setIsSubscribed(data.subscribed);
+            setChannel(prev => ({
+                ...prev,
+                subscribersCount: prev.subscribersCount + (data.subscribed ? 1 : -1)
+            }));
+            showToast('success', data.message);
+        } catch (error) {
+            showToast('error', error.message);
+        } finally {
+            setSubscribing(false);
+        }
+    };
 
     const fetchChannelAndVideos = async () => {
         try {
@@ -83,6 +137,14 @@ const ChannelPage = () => {
                                 <span>{channel.subscribersCount.toLocaleString()} subscribers</span>
                             </div>
                             <p className="mt-4 text-gray-700">{channel.description}</p>
+                            <Button
+                                onClick={handleSubscribe}
+                                disabled={subscribing || (isLoggedIn && channel.owner === user._id)}
+                                variant={isSubscribed ? "outline" : "default"}
+                                className="mt-4"
+                            >
+                                {subscribing ? 'Processing...' : isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+                            </Button>
                         </div>
                     </div>
                 </div>

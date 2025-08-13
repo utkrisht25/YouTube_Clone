@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Channel'
     }],
+    subscribedChannels: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Channel'
+    }],
     refreshToken: {
         type: String
     }
