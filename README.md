@@ -4,8 +4,8 @@ A full-stack YouTube clone application built with the MERN stack (MongoDB, Expre
 
 ## 🌐 Live Demo
 
-[View Live Demo](https://your-youtube-clone.vercel.app) • [View GitHub Repository](https://github.com/yourusername/youtube-clone)
-
+[View Live Demo](https://mern-youtube-clone-yogi.onrender.com) • [View GitHub Repository](https://github.com/utkrisht25/YouTube_Clone)
+[Sample Video Demo](https://drive.google.com/file/d/1NwyQt048HP1zQxJ1SxUOcLy_s3KhwGHs/view?usp=sharing)
 ## ✨ Features
 
 ### User Management
