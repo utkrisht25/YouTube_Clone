@@ -4,8 +4,9 @@ A full-stack YouTube clone application built with the MERN stack (MongoDB, Expre
 
 ## 🌐 Live Demo
 
-[View Live Demo](https://mern-youtube-clone-yogi.onrender.com) • [View GitHub Repository](https://github.com/utkrisht25/YouTube_Clone)
-[Sample Video Demo](https://drive.google.com/file/d/1NwyQt048HP1zQxJ1SxUOcLy_s3KhwGHs/view?usp=sharing)
+• [View Live Demo](https://mern-youtube-clone-yogi.onrender.com)
+• [View GitHub Repository](https://github.com/utkrisht25/YouTube_Clone) 
+• [Sample Video Demo](https://drive.google.com/file/d/1NwyQt048HP1zQxJ1SxUOcLy_s3KhwGHs/view?usp=sharing)
 ## ✨ Features
 
 ### User Management
@@ -174,7 +175,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Author
 
-- **Your Name** - [GitHub Profile](https://github.com/yourusername)
+- **Utkrisht Yogi** - [GitHub Profile](https://github.com/utkrisht25/)
 
 ## 🙏 Acknowledgments
 
