@@ -23,15 +23,23 @@ app.use(express.json());
 // express.json() helps us to get all the data in json format that we'll get from the frontend
 app.use(cookieParser());
 // cookie parseer will parse the data from the cookie that it will get from the frontend 
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
-if (process.env.NODE_ENV === 'production') {
-    process.env.FRONTEND_URL = 'https://mern-youtube-clone-yogi.onrender.com';
-}
+
+const allowedOrigins = [
+  "https://mern-youtube-clone-yogi.onrender.com",
+  "http://localhost:5173"
+];
 
 app.use(cors({
-    origin:process.env.FRONTEND_URL,
-    credentials: true
-}))
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true // Enable cookies/auth headers
+}));
 
 const PORT = process.env.PORT;
 
